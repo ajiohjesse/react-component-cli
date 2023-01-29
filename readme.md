@@ -110,8 +110,9 @@ powershell. It has only been tested and confirmed to work
 with Git Bash (this terminal comes along with git
 installation).
 
-Inspired by Josh Comeau's `new-component` avaialble via
-[this respository]('https://github.com/joshwcomeau/new-component')
+Inspired by Josh Comeau's `new-component` available via
+<a href="https://github.com/joshwcomeau/new-component">this
+repository.</a>
 
 ## Installation
 
