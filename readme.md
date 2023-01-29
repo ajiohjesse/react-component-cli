@@ -46,7 +46,7 @@ To change the default settings, create a `crc.config.json`
 file in the root directory of your app with the following
 options;
 
-```json
+```javascript
 //crc.config.json
 
 {
@@ -101,7 +101,7 @@ in which they are nested.
 **Example 2:** You can also run
 `crc PageLayout general layout` to create a PageLayout
 component in `components/general/layout`. The layout folder
-will be automatically created if ist.
+will be automatically created if it does not exist.
 
 ## Usability
 
