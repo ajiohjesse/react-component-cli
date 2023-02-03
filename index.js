@@ -2,6 +2,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const package = require('./package.json');
 
 const config = require('./src/config.js');
 const getComponentTemplate = require('./src/templates.js');
@@ -17,8 +18,17 @@ const [_, __, componentName, ...rest] = process.argv;
 // Check if component name is provided
 if (!componentName) {
   console.error(
-    'Please provide a component name like this: crc <name>'
+    'Please provide a component name like this: crc <name> or crc --help for more info.'
   );
+  process.exit(0);
+}
+
+//request version
+if (
+  process.argv.includes('-v') ||
+  process.argv.includes('-version')
+) {
+  console.info('v', package.version);
   process.exit(0);
 }
 
