@@ -2,13 +2,13 @@
 
 const fs = require('fs');
 const path = require('path');
-const package = require('./package.json');
 
 const config = require('./src/config.js');
 const getComponentTemplate = require('./src/templates.js');
 const {
   getComponentPath,
-  makeDirectory,
+  renderVersion,
+  renderHelp,
 } = require('./src/utils.js');
 
 //The rest of the arguments will be used to
@@ -18,22 +18,20 @@ const [_, __, componentName, ...rest] = process.argv;
 // Check if component name is provided
 if (!componentName) {
   console.error(
-    'Please provide a component name like this: crc <name> or crc --help for more info.'
+    'Please provide a component name like this: crc <name> or crc --help'
   );
   process.exit(0);
 }
 
-//request version
-if (
-  process.argv.includes('-v') ||
-  process.argv.includes('-version')
-) {
-  console.info('v', package.version);
-  process.exit(0);
-}
+//if user requests version
+renderVersion(process.argv);
+
+//if user requests config help
+renderHelp(process.argv)
 
 const componentTemplate =
   getComponentTemplate(componentName);
+
 const componentPath = getComponentPath(componentName, rest);
 
 //full path with filename and extension
@@ -49,7 +47,7 @@ if (fs.existsSync(componentFullPath)) {
 }
 
 //create component directory structure
-makeDirectory(componentPath);
+fs.mkdirSync(componentPath, { recursive: true });
 
 //create component
 fs.writeFileSync(componentFullPath, componentTemplate);
