@@ -9,11 +9,18 @@ const {
   getComponentPath,
   renderVersion,
   renderHelp,
-} = require('./src/utils.js');
+} = require('./src/helpers.js');
 
-//The rest of the arguments will be used to
+//The rest of the arguments [...args] will be used to
 //create nested folders for the component
-const [_, __, componentName, ...rest] = process.argv;
+let [_, __, componentName, ...args] = process.argv;
+
+let prefersPlainComponent = false;
+
+if (args.includes('--plain')) {
+  prefersPlainComponent = true;
+  args = args.filter(value => value !== '--plain');
+}
 
 // Check if component name is provided
 if (!componentName) {
@@ -27,12 +34,18 @@ if (!componentName) {
 renderVersion(process.argv);
 
 //if user requests config help
-renderHelp(process.argv)
+renderHelp(process.argv);
 
-const componentTemplate =
-  getComponentTemplate(componentName);
+const componentTemplate = getComponentTemplate(
+  componentName,
+  prefersPlainComponent
+);
 
-const componentPath = getComponentPath(componentName, rest);
+const componentPath = getComponentPath(
+  componentName,
+  args,
+  prefersPlainComponent
+);
 
 //full path with filename and extension
 const componentFullPath = path.resolve(
@@ -53,7 +66,11 @@ fs.mkdirSync(componentPath, { recursive: true });
 fs.writeFileSync(componentFullPath, componentTemplate);
 
 //create stylesheet if css-modules is preferred
-if (config.styleOption === 'css-modules') {
+//but only if --plain is omited from cli args
+if (
+  config.styleOption === 'css-modules' &&
+  !prefersPlainComponent
+) {
   const stylesheetFullPath = path.resolve(
     componentPath,
     componentName + '.module.css'

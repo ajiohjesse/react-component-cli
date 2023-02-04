@@ -8,10 +8,11 @@ const plainComponent = componentName => `const ${formatName(
     <div>
       <h1>${componentName}</h1>
     </div>
-  )
-}
+  );
+};
 
 export default ${formatName(componentName)};
+
 `;
 
 const cssModuleComponent =
@@ -26,16 +27,36 @@ const ${formatName(componentName)} = () => {
 };
 
 export default ${formatName(componentName)};
+
 `;
 
 const styledComponent =
   componentName => `import styled from 'styled-components';
+
+const ${formatName(componentName)} = () => {
+  return (
+    <${formatName(componentName)}Wrapper>
+      <h1>${componentName}</h1>
+    </${formatName(componentName)}Wrapper>
+  );
+};
   
-export const ${formatName(componentName)} = styled.div\`\`
+export default ${formatName(componentName)}
+  
+const ${formatName(componentName)}Wrapper = styled.div\`
+  display: grid;
+\`;
 
 `;
 
-function getComponentTemplate(componentName) {
+function getComponentTemplate(componentName, prefersPlain) {
+  //prefersPlain === true if user passes --plain flag as
+  // a cli argument.
+
+  if (prefersPlain) {
+    return plainComponent(componentName);
+  }
+
   switch (config.styleOption) {
     case 'plain':
       return plainComponent(componentName);

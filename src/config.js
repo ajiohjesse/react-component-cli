@@ -1,19 +1,37 @@
 const path = require('path');
-const fs = require('fs');
+const os = require('os');
+const { requireOptional } = require('./utils');
 
-const defaultConfig = require('../config.json');
-let userConfig = null;
+const defaults = {
+  src: true,
+  extension: 'jsx',
+  styleOption: 'plain',
+};
 
-const userConfigPath = path.resolve(
+const globalConfigPath = path.resolve(
+  os.homedir(),
+  'crc.config.json'
+);
+
+const localConfigPath = path.resolve(
   process.cwd(),
   'crc.config.json'
 );
 
-if (fs.existsSync(userConfigPath)) {
-  userConfig = require(userConfigPath);
-}
+const localOverrides = requireOptional(localConfigPath);
+const globalOverrides = requireOptional(globalConfigPath);
 
-//The user config overwrites the default
-const config = Object.assign({}, defaultConfig, userConfig);
+// Get the configuration for this component.
+// Overrides are as follows:
+//  - default values
+//  - globally-set overrides
+//  - project-specific overrides
+
+const config = Object.assign(
+  {},
+  defaults,
+  globalOverrides,
+  localOverrides
+);
 
 module.exports = config;
