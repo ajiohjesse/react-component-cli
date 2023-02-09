@@ -10,6 +10,7 @@ const {
   renderVersion,
   renderHelp,
 } = require('./src/helpers.js');
+const { formatName } = require('./src/utils.js');
 
 //The rest of the arguments [...args] will be used to
 //create nested folders for the component
@@ -80,5 +81,11 @@ if (
 }
 
 console.info(
-  `${componentName} component created at ${componentPath}`
+  `✨ ${formatName(componentName)} ✨ component created! 🚀`
+);
+console.info(`✔️ Directory: ${componentPath}`);
+console.info(
+  `✔️ StyleOption: ${
+    prefersPlainComponent ? 'plain' : config.styleOption
+  }`
 );

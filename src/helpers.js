@@ -35,22 +35,38 @@ function renderVersion(args) {
 
 function renderHelp(args) {
   if (args.includes('-help') || args.includes('--help')) {
+    console.info('\n');
+
     console.info('----------------');
     console.info('COMMANDS');
     console.info('----------------');
-    console.info('Create component: crc <componentName>');
-    console.info('Help: crc -help or crc --help');
-    console.info('version: crc -v or crc --v');
+    console.info(
+      '✔️ Create component: crc <componentName>'
+    );
+    console.info(
+      '✔️ Create plain component: crc <componentName> --plain'
+    );
+    console.info(
+      '✔️ Create nested component: crc <componentName> foldername1 foldername2 ...'
+    );
+    console.info('✔️ Help: crc -help or crc --help');
+    console.info('✔️ version: crc -v or crc --v');
+
+    console.info('\n');
 
     console.info('----------------');
     console.info('CONFIG');
     console.info('----------------');
 
-    console.info(`Create a custom crc.config.json file
-in the root of your project directory
-to customize the default options.`);
+    console.info(`Create a global crc.config.json file
+in the root folder of your computer 
+or a project specific one in the root
+directory of your project with the 
+following options.`);
 
-    console.table({
+    console.info('\n');
+
+    console.info({
       src: 'true || false',
       extension: 'jsx  || tsx || js || ts',
       styleOption:

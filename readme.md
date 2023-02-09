@@ -1,21 +1,110 @@
-# Bootstrap New React Components
+# React Component CLI
 
-The create-react-component cli allows you to easily
-bootstrap new react components based on your specifications.
+Easily bootstrap new react components based on your
+preferences.
 
-Run `crc <componentName>` from the bash terminal in the root
-of your react project.
+## Usage
 
-By default, every new component will be created in the
-`src/components` path in a sub-folder of the same name,
-along with a corresponding module.css file. i.e Running
-`crc button` will create a button component in;
+To create a button component, run the following command in
+your terminal;
+
+```bash
+  crc button
+```
 
 - src
   - components
-    - button
-      - button.jsx
-      - button.module.css
+    - button.jsx
+
+### For nested components
+
+```bash
+  crc PageLayout layouts
+```
+
+- src
+  - components
+    - layouts
+      - PageLayout.jsx
+
+## Installation
+
+Clone the project
+
+```bash
+  git clone https://github.com/ajiohjesse/react-component-cli.git
+```
+
+Go to the project directory
+
+```bash
+  cd react-component-cli
+```
+
+Install as global
+
+```bash
+  npm install -g
+```
+
+Test your installation
+
+```bash
+  crc -v
+```
+
+## Configuration
+
+Every new component is a react functional component. The
+`src` folder is used by default and will be created if it
+doesn't exist.
+
+Default options can be changed by creating a
+`crc.config.json` file in the root folder of your computer
+(`C:\Users\username` for windows). This configuration will
+be applied for every project.
+
+To customize based on specific projects, create the
+`crc.congig.json` file in the root of your React project
+directory.
+
+## Default Config
+
+```json
+{
+  "src": true,
+  "extension": "jsx",
+  "styleOption": "plain"
+}
+```
+
+## Reference
+
+| Key           | Type      | Description                                                                                                                    |
+| :------------ | :-------- | :----------------------------------------------------------------------------------------------------------------------------- |
+| `src`         | `boolean` | Use the `src` folder when creating new components.                                                                             |
+| `extension`   | `string`  | The default file extension. Options are `js`, `jsx`, `ts`, or `tsx`.                                                           |
+| `styleOption` | `string`  | Customize the component boiler plate based on prefered style option. Options are `plain`, `css-modules` or `styled-components` |
+
+## Output
+
+### plain
+
+```javascript
+//button.jsx
+
+const Button = () => {
+  return (
+    <div>
+      <h1>button</h1>
+    </div>
+  );
+};
+
+export default Button;
+```
+
+### css-modules
 
 ```javascript
 //button.jsx
@@ -33,91 +122,42 @@ const Button = () => {
 export default Button;
 ```
 
-> Note: The folder structure will be automatically created
-> if it is not already available.
+> **Note:** A corresponding `.module.css` file will be
+> created and auto imported if style option is set to
+> css-modules.
 
-Every component is a react functional component. The default
-file extension is `.jsx` but can be changed to `.tsx` if you
-prefer working with typscript.
-
-## Configuration
-
-To change the default settings, create a `crc.config.json`
-file in the root directory of your app with the following
-options;
+### styled-components
 
 ```javascript
-//crc.config.json
-
-{
-  "src": true /** use the src folder */,
-  "extension": "jsx" /** 'js' || 'jsx' || 'ts' || 'tsx' */,
-  "styleOption": "css-modules" /** css-modules || styled-components || plain */
-}
-```
-
-Edit the configuration based on your preference.
-
-Setting the `"styleOption": "styled-components"` will result
-in the following component structure;
-
-```javascript
-//button.jsx
+//Button.jsx
 
 import styled from 'styled-components';
 
-export const Button = styled.div;
-```
-
-Setting the `"styleOption": "plain"` will result in the
-following component structure;
-
-```javascript
-//button.jsx
-
 const Button = () => {
   return (
-    <div>
-      <h1>button</h1>
-    </div>
+    <ButtonWrapper>
+      <h1>Button</h1>
+    <ButtonWrapper>
   );
 };
 
 export default Button;
+
+const ButtonWrapper = styled.div`
+  display: grid;
+`
 ```
 
-## Nested Components
+## Flags
 
-Most times, the component folder will comprise of nested
-folders such as `components/general` and
-`components/specific`. To target these nested folders when
-creating a new component, provide the nested folders as
-additional arguments to `crc <componentName>` in the order
-in which they are nested.
+`crc -v` - Check version
 
-**Example 1:** To create a new button component in
-`components/general`, run `crc button general`
+`crc -help` - See options
 
-**Example 2:** You can also run
-`crc PageLayout general layout` to create a PageLayout
-component in `components/general/layout`. The layout folder
-will be automatically created if it does not exist.
+## Author
 
-## Usability
-
-This will not work with windows command prompt or
-powershell. It has only been tested and confirmed to work
-with Git Bash (this terminal comes along with git
-installation).
+- [@ajiohjesse](https://www.github.com/ajiohjesse)
 
 Inspired by Josh Comeau's `new-component` available via
 <a href="https://github.com/joshwcomeau/new-component">this
 repository.</a>
-
-## Installation
-
-To install this tool glabally, simply clone the repository
-to your computer, open the folder in a terminal and run
-`npm install -g`. You can now create new react components
-from anywhere using `crc <componentName>` provided you are
-using a bash terminal.
