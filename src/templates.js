@@ -20,7 +20,7 @@ const cssModuleComponent =
 
 const ${formatName(componentName)} = () => {
   return (
-    <div classname={styles.${componentName}}>
+    <div className={styles.${componentName}}>
       <h1>${componentName}</h1>
     </div>
   );
