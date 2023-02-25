@@ -3,18 +3,25 @@
 const fs = require('fs');
 const path = require('path');
 
-const config = require('./src/config.js');
+const { config } = require('./src/config.js');
 const getComponentTemplate = require('./src/templates.js');
 const {
   getComponentPath,
   renderVersion,
   renderHelp,
+  init,
 } = require('./src/helpers.js');
 const { formatName } = require('./src/utils.js');
 
 //The rest of the arguments [...args] will be used to
 //create nested folders for the component
 let [_, __, componentName, ...args] = process.argv;
+
+//initialize a crc config
+if (componentName === 'init') {
+  init();
+  process.exit(0);
+}
 
 let prefersPlainComponent = false;
 

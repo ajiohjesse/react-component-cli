@@ -1,5 +1,6 @@
 const path = require('path');
-const config = require('./config.js');
+const fs = require('fs');
+const { config, configDefaults } = require('./config.js');
 const package = require('../package.json');
 
 //args refers to additional arguments passed to the cli after
@@ -49,6 +50,7 @@ function renderHelp(args) {
     console.info(
       '✔️ Create nested component: crc <componentName> foldername1 foldername2 ...'
     );
+    console.info('✔️ Initialize local config: crc init');
     console.info('✔️ Help: crc -help or crc --help');
     console.info('✔️ version: crc -v or crc --v');
 
@@ -77,8 +79,23 @@ following options.`);
   }
 }
 
+function init() {
+  const localConfigPath = path.resolve(
+    process.cwd(),
+    'crc.config.json'
+  );
+
+  fs.writeFileSync(
+    localConfigPath,
+    JSON.stringify(configDefaults)
+  );
+
+  console.info('✔️ Created local crc.config.json');
+}
+
 module.exports = {
   getComponentPath,
   renderVersion,
   renderHelp,
+  init,
 };

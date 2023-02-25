@@ -2,7 +2,7 @@ const path = require('path');
 const os = require('os');
 const { requireOptional } = require('./utils');
 
-const defaults = {
+const configDefaults = {
   src: true,
   extension: 'jsx',
   styleOption: 'plain',
@@ -29,9 +29,9 @@ const globalOverrides = requireOptional(globalConfigPath);
 
 const config = Object.assign(
   {},
-  defaults,
+  configDefaults,
   globalOverrides,
   localOverrides
 );
 
-module.exports = config;
+module.exports = { config, configDefaults };

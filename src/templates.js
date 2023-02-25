@@ -1,4 +1,4 @@
-const config = require('./config.js');
+const { config } = require('./config.js');
 const { formatName } = require('./utils.js');
 
 const plainComponent = componentName => `const ${formatName(
