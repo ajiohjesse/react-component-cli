@@ -65,7 +65,7 @@ Default options can be changed by creating a
 be applied for every project.
 
 To customize based on specific projects, create the
-`crc.congig.json` file in the root of your React project
+`crc.config.json` file in the root folder of your React project
 directory.
 
 ## Default Config
@@ -150,9 +150,13 @@ const ButtonWrapper = styled.div`
 
 ## Flags
 
-`crc -v` - Check version
+`crc init` - Initialize a config file in your project directory.
 
-`crc -help` - See options
+`crc -v` - Check version.
+
+`crc -help` - See options.
+
+`crc <component name> --plain` - force create a plain component.
 
 ## Author
 
