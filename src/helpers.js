@@ -85,12 +85,33 @@ function init() {
     'crc.config.json'
   );
 
+  const gitignorePath = path.resolve(
+    process.cwd(),
+    '.gitignore'
+  );
+
   fs.writeFileSync(
     localConfigPath,
     JSON.stringify(configDefaults)
   );
 
   console.info('✔️ Created local crc.config.json');
+
+  if (fs.existsSync(gitignorePath)) {
+    //add crc.config.json to .gitignore
+    //if .gitignore exists in root folder
+
+    const ignored = fs
+      .readFileSync(gitignorePath, 'utf-8')
+      .split('\n');
+
+    if (!ignored.includes('crc.config.json')) {
+      fs.appendFileSync(gitignorePath, '\ncrc.config.json');
+      console.info(
+        '✔️ Added crc.config.json to .gitignore'
+      );
+    }
+  }
 }
 
 module.exports = {
